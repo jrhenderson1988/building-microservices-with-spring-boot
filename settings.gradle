@@ -1,3 +1,4 @@
 include 'customer-service'
 include 'order-service'
 include 'discovery-service'
+include 'gateway-service'
