@@ -1,5 +1,7 @@
 package com.github.jrhenderson1988.orderservice;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,15 +20,24 @@ public class OrderController {
             new Order(4, 1, "Product D"),
             new Order(5, 2, "Product E"));
 
+    private Environment environment;
+
+    @Autowired
+    public OrderController(final Environment environment) {
+        this.environment = environment;
+    }
+
     @GetMapping
-    public List<Order> getAllOrders(@RequestParam(required = false) Integer customerId) {
+    public ResponseWrapper<List<Order>> getAllOrders(@RequestParam(required = false) Integer customerId) {
         if (customerId != null) {
-            return orders.stream()
-                         .filter(order -> customerId.equals(order.getCustomerId()))
-                         .collect(Collectors.toList());
+            return new ResponseWrapper<>(
+                    environment,
+                    orders.stream()
+                          .filter(order -> customerId.equals(order.getCustomerId()))
+                          .collect(Collectors.toList()));
         }
 
-        return orders;
+        return new ResponseWrapper<>(environment, orders);
     }
 
     @GetMapping("/{id}")
