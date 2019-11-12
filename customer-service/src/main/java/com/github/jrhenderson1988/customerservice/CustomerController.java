@@ -33,7 +33,7 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}/orders")
-    public List<Object> getOrdersForCustomer(@PathVariable int id) {
+    public Object getOrdersForCustomer(@PathVariable int id) {
         return orderClient.getOrdersForCustomer(id);
     }
 }
