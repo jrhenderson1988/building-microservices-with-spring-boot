@@ -20,7 +20,7 @@ public class OrderController {
             new Order(4, 1, "Product D"),
             new Order(5, 2, "Product E"));
 
-    private Environment environment;
+    private final Environment environment;
 
     @Autowired
     public OrderController(final Environment environment) {
